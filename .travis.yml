@@ -1,0 +1,13 @@
+language: generic
+sudo: required
+services:
+  - docker
+berfore_install:
+  - docker build -t menio/react-test -f ./client/Dockerfile.dev ./client
+script:
+  - docker run -e CI=true menio/react-test npm test
+after_success:
+  - docker build -t menio/multi-client ./client
+  - docker build -t menio/multi-nginx ./nginx 
+  - docker build -t menio/multi-server ./server
+  - docker build -t menio/multi-worker ./worker
