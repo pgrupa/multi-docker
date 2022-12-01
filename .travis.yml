@@ -11,3 +11,9 @@ after_success:
   - docker build -t menio/multi-nginx ./nginx 
   - docker build -t menio/multi-server ./server
   - docker build -t menio/multi-worker ./worker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push menio/multi-client
+  - docker push menio/multi-nginx
+  - docker push menio/multi-server
+  - docker push menio/multi-worker
+  
